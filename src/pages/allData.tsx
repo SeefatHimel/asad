@@ -15,8 +15,8 @@ import {
   InputLabel,
   Button,
 } from "@mui/material";
-// import jsPDF from "jspdf"; // Import jsPDF for PDF generation
 import { CSVLink } from "react-csv"; // Import CSVLink for CSV download
+import { SelectChangeEvent } from "@mui/material/Select"; // Ensure SelectChangeEvent is imported
 
 interface StudentData {
   nickName: string;
@@ -75,7 +75,7 @@ const DataTable: React.FC = () => {
 
   // Handle filter change
   const handleFilterChange = (
-    event: React.ChangeEvent<{ value: unknown }>,
+    event: SelectChangeEvent<string>, // Use SelectChangeEvent<string> for typing
     filterName: string
   ) => {
     setFilters({
@@ -103,39 +103,9 @@ const DataTable: React.FC = () => {
     );
   });
 
-  // Function to download PDF
+  // Function to download PDF (currently disabled)
   const downloadPDF = () => {
-    return;
-    const doc = new jsPDF();
-    doc.setFontSize(12);
-    doc.text("Student Data", 20, 20);
-    doc.autoTable({
-      head: [
-        [
-          "Student ID",
-          "Nick Name",
-          "Full Name",
-          "Class",
-          "Section",
-          "Version",
-          "Wings",
-          "Blood Group",
-          "Mobile No",
-        ],
-      ],
-      body: filteredData.map((student) => [
-        student.studentID,
-        student.nickName,
-        student.fullName,
-        student.class,
-        student.section,
-        student.version,
-        student.wings,
-        student.bloodGroup,
-        student.mobileNo,
-      ]),
-    });
-    doc.save("student_data.pdf");
+    return; // Placeholder for future PDF functionality
   };
 
   return (
@@ -148,7 +118,9 @@ const DataTable: React.FC = () => {
           <InputLabel>Class</InputLabel>
           <Select
             value={filters.class}
-            onChange={(e) => handleFilterChange(e, "class")}
+            onChange={(e) =>
+              handleFilterChange(e as SelectChangeEvent<string>, "class")
+            }
             label="Class"
           >
             <MenuItem value="">All</MenuItem>
@@ -163,7 +135,9 @@ const DataTable: React.FC = () => {
           <InputLabel>Section</InputLabel>
           <Select
             value={filters.section}
-            onChange={(e) => handleFilterChange(e, "section")}
+            onChange={(e) =>
+              handleFilterChange(e as SelectChangeEvent<string>, "section")
+            }
             label="Section"
           >
             <MenuItem value="">All</MenuItem>
@@ -178,7 +152,9 @@ const DataTable: React.FC = () => {
           <InputLabel>Version</InputLabel>
           <Select
             value={filters.version}
-            onChange={(e) => handleFilterChange(e, "version")}
+            onChange={(e) =>
+              handleFilterChange(e as SelectChangeEvent<string>, "version")
+            }
             label="Version"
           >
             <MenuItem value="">All</MenuItem>
@@ -193,7 +169,9 @@ const DataTable: React.FC = () => {
           <InputLabel>Blood Group</InputLabel>
           <Select
             value={filters.bloodGroup}
-            onChange={(e) => handleFilterChange(e, "bloodGroup")}
+            onChange={(e) =>
+              handleFilterChange(e as SelectChangeEvent<string>, "bloodGroup")
+            }
             label="Blood Group"
           >
             <MenuItem value="">All</MenuItem>
